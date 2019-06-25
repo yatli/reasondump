@@ -1,3 +1,6 @@
+import shutil
+import os
+
 # make sure reason is opened, and sample auto play is OFF, and the rack is EMPTY.
 
 reason = App("Reason")
@@ -86,7 +89,12 @@ def go_nav(folder, section, searchItem):
         folder.click()
         sleep(1)
     if section:
-        section.doubleClick()
+        typ = type(section)
+        if typ is not list:
+            section = [section]
+        for s in section:
+            s.doubleClick()
+            sleep(3)
     searchTextbox.click()
     type(searchItem + Key.ENTER)
     sleep(3)
@@ -108,6 +116,24 @@ def go_dump(readProc, nextProc, cleanupProc, name):
                 pass
             nextProc()
     # then, move all the dumped samples into a folder
+    target_dir = "recorder/"+name
+    try:
+        os.mkdir(target_dir)
+    except ex:
+        print "failed to create directory: "+name
+        print ex
+    try:
+        files = [x for x in os.listdir('recorder/') if x.endswith('.wav')]
+        for x in files:
+            try:
+                shutil.move(x, target_dir)
+                print x + " -> " + target_dir
+            except:
+                print "failed to move file: "+x
+                print ex
+    except ex:
+        print "failed to list directory 'recorder'"
+        print ex
 
 
 def go_rex(folder, section, name, nr):
@@ -167,8 +193,30 @@ go_rex(reasonRefills, Location(215, 733), "world_of_rex_2", 988)
 
 go_rex(Location(48, 771), None, "Roland_rex", 78)
 go_rex(Location(63, 790), None, "SonicReality_rex", 811)
-# go_wav(Location(71, 755), None, "Symphony_of_voices", 811)
 
+zeroG = Location(49, 933)
+totalRex2 = Location(218, 302)
+
+go_rex(zeroG, [totalRex2, Location(221, 194)], "totalRex_PureBrazilieanBeats", 194)
+go_rex(zeroG, [totalRex2, Location(205, 211)], "totalRex_PureHiphop", 146)
+go_rex(zeroG, [totalRex2, Location(204, 229)], "totalRex_PureMayhem", 340)
+go_rex(zeroG, [totalRex2, Location(196, 247)], "totalRex_PureRnB", 195)
+go_rex(zeroG, [totalRex2, Location(196, 267)], "totalRex_PureTabla", 274)
+go_rex(zeroG, [totalRex2, Location(203, 284)], "totalRex_PureTriphop", 147)
+go_rex(zeroG, [totalRex2, Location(219, 301)], "totalRex_reggae_connection", 194)
+go_rex(zeroG, [totalRex2, Location(247, 319)], "totalRex_return_to_plannet_of_the_break", 142)
+go_rex(zeroG, [totalRex2, Location(228, 336)], "totalRex_rhythmGuitar_fx", 248)
+go_rex(zeroG, [totalRex2, Location(206, 355)], "totalRex_species_of_india", 200)
+go_rex(zeroG, [totalRex2, Location(213, 374)], "totalRex_synthbassloops", 14)
+go_rex(zeroG, [totalRex2, Location(211, 393)], "totalRex_techno_prisoners", 36)
+go_rex(zeroG, [totalRex2, Location(218, 409)], "totalRex_total_drumandbass", 782)
+go_rex(zeroG, [totalRex2, Location(209, 427)], "totalRex_total_funk", 910)
+go_rex(zeroG, [totalRex2, Location(205, 444)], "totalRex_total_hiphop", 552)
+go_rex(zeroG, [totalRex2, Location(201, 464)], "totalRex_total_house", 668)
+go_rex(zeroG, [totalRex2, Location(215, 482)], "totalRex_trance_formation", 15)
+go_rex(zeroG, [totalRex2, Location(220, 500)], "totalRex_upfront_lead_guitar", 44)
+go_rex(zeroG, [totalRex2, Location(250, 518)], "totalRex_WIRED_the_element_of_trance", 928)
+go_rex(zeroG, [totalRex2, Location(220, 536)], "totalRex_world_class_breaks", 200)
 
 #go(rexDrumLoops, "drumloops.txt", 2)
 #go(rexPercLoops, "percloops.txt", 2)
