@@ -89,9 +89,11 @@ def go_nav(folder, section, searchItem):
         folder.click()
         sleep(1)
     if section:
-        typ = type(section)
-        if typ is not list:
+        try:
+            section = list(section)
+        except:
             section = [section]
+            pass
         for s in section:
             s.doubleClick()
             sleep(3)
@@ -101,7 +103,8 @@ def go_nav(folder, section, searchItem):
     # double click first entry
     Location(228, 186).doubleClick()
 
-def go_dump(readProc, nextProc, cleanupProc, name):
+def go_dump(readProc, nextProc, cleanupProc, name, nr):
+    nr = 3
     # iterate through all the samples
     with open("recorder/"+name+".txt", "w") as f:
         for i in range(0, nr):
@@ -115,13 +118,14 @@ def go_dump(readProc, nextProc, cleanupProc, name):
             while not exists("1561294114006.png"):
                 pass
             nextProc()
+    # run the cleanup proc
+    cleanupProc()
     # then, move all the dumped samples into a folder
     target_dir = "recorder/"+name
     try:
         os.mkdir(target_dir)
-    except ex:
+    except:
         print "failed to create directory: "+name
-        print ex
     try:
         files = [x for x in os.listdir('recorder/') if x.endswith('.wav')]
         for x in files:
@@ -130,10 +134,8 @@ def go_dump(readProc, nextProc, cleanupProc, name):
                 print x + " -> " + target_dir
             except:
                 print "failed to move file: "+x
-                print ex
-    except ex:
+    except:
         print "failed to list directory 'recorder'"
-        print ex
 
 
 def go_rex(folder, section, name, nr):
@@ -142,7 +144,7 @@ def go_rex(folder, section, name, nr):
     go_nav(folder, section, ".rx2")
     sleep(5)
     # now, the first rex loop is loaded, and a OctoRex is created.
-    go_dump(readRex, nextRex, cleanupRex, name)
+    go_dump(readRex, nextRex, cleanupRex, name, nr)
 
 
 def go_aiff(section, name, nr):
@@ -151,7 +153,7 @@ def go_aiff(section, name, nr):
     go_nav(folder, section, ".aif")
     sleep(2)
     # now, the first aiff is loaded, and an audio track is created.
-    go_dump(readAiff, nextAiff, cleanupAiff, name)
+    go_dump(readAiff, nextAiff, cleanupAiff, name, nr)
 
 def go_wav(section, name, nr):
     if userInterrupt:
@@ -159,7 +161,7 @@ def go_wav(section, name, nr):
     go_nav(folder, section, ".wav")
     sleep(2)
     # now, the first aiff is loaded, and an audio track is created.
-    go_dump(readAiff, nextAiff, cleanupAiff, name)
+    go_dump(readAiff, nextAiff, cleanupAiff, name, nr)
 
 
 # done
@@ -170,20 +172,20 @@ def go_wav(section, name, nr):
 #go_aiff(factorySounds, Location(201, 374), "factory_aiff.txt", 55)    
 
 
-go_rex(Location(54, 484), None, "flatpack", 624)
-go_rex(Location(46, 520), None, "akai", 784)
-go_rex(Location(70, 556), None, "analogmonster", 77)
-go_rex(Location(40, 700), None, "peff", 65)
-go_rex(Location(67, 718), None, "Propellerhead", 1492)
+#go_rex(Location(54, 484), None, "flatpack", 624)
+#go_rex(Location(46, 520), None, "akai", 784)
+#go_rex(Location(70, 556), None, "analogmonster", 77)
+#go_rex(Location(40, 700), None, "peff", 65)
+#go_rex(Location(67, 718), None, "Propellerhead", 1492)
 
 reasonRefills=Location(65, 753)
 
-go_rex(reasonRefills, Location(228, 213), "ACCESS_VIRUSES", 47)
-go_aif(reasonRefills, Location(215, 302), "celtic_flavours", 513)
-go_rex(reasonRefills, Location(225, 337), "RexDrumloops", 1200)
-go_rex(reasonRefills, Location(239, 355), "drumnbassSensations", 63)
-go_rex(reasonRefills, Location(206, 392), "funkmaster", 655)
-go_rex(reasonRefills, Location(281, 518), "AMG_Drumnbass", 562)
+go_rex(reasonRefills, Location(228, 230), "ACCESS_VIRUSES", 47)
+go_aif(reasonRefills, Location(215, 319), "celtic_flavours", 513)
+go_rex(reasonRefills, Location(225, 354), "RexDrumloops", 1200)
+go_rex(reasonRefills, Location(239, 373), "drumnbassSensations", 63)
+go_rex(reasonRefills, Location(206, 409), "funkmaster", 655)
+go_rex(reasonRefills, Location(281, 535), "AMG_Drumnbass", 562)
 go_rex(reasonRefills, Location(234, 572), "Rex_Noize_Loops", 293)
 go_wav(reasonRefills, Location(244, 644), "the_dark_side_of_triphop", 246)
 go_rex(reasonRefills, Location(204, 660), "VIROLOGY", 80)
