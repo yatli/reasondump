@@ -1,0 +1,5 @@
+*.wav
+*.txt
+recorder/bin/
+recorder/obj/
+recorder/.vs/
