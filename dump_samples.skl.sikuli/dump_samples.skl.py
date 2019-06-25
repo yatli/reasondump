@@ -104,7 +104,6 @@ def go_nav(folder, section, searchItem):
     Location(228, 186).doubleClick()
 
 def go_dump(readProc, nextProc, cleanupProc, name, nr):
-    nr = 3
     # iterate through all the samples
     with open("recorder/"+name+".txt", "w") as f:
         for i in range(0, nr):
@@ -130,7 +129,7 @@ def go_dump(readProc, nextProc, cleanupProc, name, nr):
         files = [x for x in os.listdir('recorder/') if x.endswith('.wav')]
         for x in files:
             try:
-                shutil.move(x, target_dir)
+                shutil.move('recorder/' + x, target_dir)
                 print x + " -> " + target_dir
             except:
                 print "failed to move file: "+x
@@ -147,7 +146,7 @@ def go_rex(folder, section, name, nr):
     go_dump(readRex, nextRex, cleanupRex, name, nr)
 
 
-def go_aiff(section, name, nr):
+def go_aif(section, name, nr):
     if userInterrupt:
         return
     go_nav(folder, section, ".aif")
@@ -169,14 +168,14 @@ def go_wav(section, name, nr):
 #go_rex(factorySounds, Location(234, 301), "percloops.txt", 258)
 #go_rex(factorySounds, Location(238, 284), "instloops.txt", 734)
 #go_rex(factorySounds, Location(218, 258), "drumloops.txt", 1717)
-#go_aiff(factorySounds, Location(201, 374), "factory_aiff.txt", 55)    
+#go_aif(factorySounds, Location(201, 374), "factory_aiff.txt", 55)    
 
 
-#go_rex(Location(54, 484), None, "flatpack", 624)
-#go_rex(Location(46, 520), None, "akai", 784)
-#go_rex(Location(70, 556), None, "analogmonster", 77)
-#go_rex(Location(40, 700), None, "peff", 65)
-#go_rex(Location(67, 718), None, "Propellerhead", 1492)
+go_rex(Location(54, 484), None, "flatpack", 624)
+go_rex(Location(46, 520), None, "akai", 784)
+go_rex(Location(70, 556), None, "analogmonster", 77)
+go_rex(Location(40, 700), None, "peff", 65)
+go_rex(Location(67, 718), None, "Propellerhead", 1492)
 
 reasonRefills=Location(65, 753)
 
@@ -196,7 +195,7 @@ go_rex(reasonRefills, Location(215, 733), "world_of_rex_2", 988)
 go_rex(Location(48, 771), None, "Roland_rex", 78)
 go_rex(Location(63, 790), None, "SonicReality_rex", 811)
 
-zeroG = Location(49, 933)
+zeroG = Location(49, 916)
 totalRex2 = Location(218, 302)
 
 go_rex(zeroG, [totalRex2, Location(221, 194)], "totalRex_PureBrazilieanBeats", 194)
