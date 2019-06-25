@@ -146,7 +146,7 @@ def go_rex(folder, section, name, nr):
     go_dump(readRex, nextRex, cleanupRex, name, nr)
 
 
-def go_aif(section, name, nr):
+def go_aif(folder, section, name, nr):
     if userInterrupt:
         return
     go_nav(folder, section, ".aif")
@@ -154,7 +154,7 @@ def go_aif(section, name, nr):
     # now, the first aiff is loaded, and an audio track is created.
     go_dump(readAiff, nextAiff, cleanupAiff, name, nr)
 
-def go_wav(section, name, nr):
+def go_wav(folder, section, name, nr):
     if userInterrupt:
         return
     go_nav(folder, section, ".wav")
